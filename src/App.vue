@@ -1,20 +1,27 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+  <html lang="en">
+    <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    </head>
+    <div id="app" >
+      <div id="nav">
+        <router-link to="/capture">Capture</router-link> |
+        <router-link to="/process">Process</router-link>
+      </div>
+      <router-view/>
     </div>
-    <router-view/>
-  </div>
+      ...
+  </html>
 </template>
 
-<style>
+<style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: $body-color;
+  background-color: $body-bg
 }
 
 #nav {
