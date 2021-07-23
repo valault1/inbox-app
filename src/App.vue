@@ -5,7 +5,7 @@
     </head>
     <div id="app" >
       <div id="nav">
-        <router-link to="/capture">Capture</router-link> |
+        <router-link to="/">Capture</router-link> |
         <router-link to="/process">Process</router-link>
       </div>
       <router-view/>
@@ -30,10 +30,10 @@
 
 #nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: $primary;
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  color: $body-color;
 }
 </style>

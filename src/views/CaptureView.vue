@@ -1,6 +1,5 @@
 <template>
   <div class="capture">
-    <a>Welcome to the Capture page!</a>
     <CaptureComponent/>
   </div>
 </template>
