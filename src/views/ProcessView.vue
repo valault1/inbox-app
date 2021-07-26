@@ -1,16 +1,17 @@
 <template>
   <div class="process">
-    <a>Welcome to the Process page!</a>
+    <a>Welcome to the Process view!</a>
+    <ProcessComponent/>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import ProcessComponent from '@/components/ProcessComponent.vue'; // @ is an alias to /src
 
 @Component({
   components: {
-    HelloWorld,
+    ProcessComponent,
   },
 })
 export default class ProcessView extends Vue {}

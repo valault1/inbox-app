@@ -38,7 +38,7 @@ export default class CaptureComponent extends Vue {
   private logOutput = "";
   private submitOnEnterKey = true;
   numInboxItems = 0;
-
+ 
   mounted() {
     // get rid of button click outlines
     document.addEventListener('click', function(e) { if(document.activeElement?.toString() == '[object HTMLButtonElement]'){ document.activeElement.blur(); } });
