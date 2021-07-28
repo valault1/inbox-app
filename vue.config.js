@@ -5,5 +5,9 @@ module.exports = {
         additionalData: `@import "@/app.scss";`
       }
     }
+  },
+  lintOnSave: false,
+  pwa: {
+    themeColor: '#00008b'
   }
 };

@@ -1,6 +1,5 @@
 <template>
   <div class="process">
-    <a>Welcome to the Process view!</a>
     <ProcessComponent/>
   </div>
 </template>

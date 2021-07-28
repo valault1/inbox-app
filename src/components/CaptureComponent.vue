@@ -1,6 +1,7 @@
 <template>
   <div class="capture">
     <b-container style="align-content: center;">
+      <b-button @click="goToProcessInbox()">view inbox <b-badge variant="dark">{{numInboxItems}}</b-badge></b-button>
       <b-row>
         <b-form-textarea
         id="captureTextInput"
@@ -14,11 +15,8 @@
         @keypress="checkForEnter($event)"
       ></b-form-textarea>
       </b-row>
-      <b-row>
-        <b-button variant="success" @click="saveInboxItem()">Submit </b-button>
-        <b-button @click="toggleEnterAction()"> Enter to Submit: <b-badge variant="dark">{{submitOnEnterKey ? "On": "Off"}}</b-badge></b-button>
-        <b-button @click="goToProcessInbox()">view inbox <b-badge variant="dark">{{numInboxItems}}</b-badge></b-button>
-      </b-row>
+      <b-button variant="success" @click="saveInboxItem()">Submit </b-button>
+
 
       <b-row>
         <span v-html="logOutput"></span>
@@ -30,6 +28,8 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import EntryService from '@/services/EntryService';
+import router from '@/router/index';
 
 @Component
 export default class CaptureComponent extends Vue {
@@ -48,14 +48,23 @@ export default class CaptureComponent extends Vue {
       this.$refs.focusMe?.focus();
       
     })
+
+    this.updateInboxBadge();
+  }
+
+  async updateInboxBadge() {
+    new EntryService().count().then((result) => {
+      this.numInboxItems = result.data;
+    })
+    
   }
 
   // Called when user hits enter or presses submit. 
   // Should clear text box and save the current text as inbox item
-  saveInboxItem() : void{
+  async saveInboxItem(){
     if (this.captureText.length == 0)
       return;
-    this.log(this.captureText);
+    new EntryService().createEntry(this.captureText).then(() => this.updateInboxBadge());
     document.getElementById("captureTextInput")?.focus();
     this.captureText = "";
     this.numInboxItems += 1;
@@ -79,6 +88,10 @@ export default class CaptureComponent extends Vue {
       e.preventDefault(); // stops it from still adding an enter character
     }
     
+  }
+
+  goToProcessInbox() {
+    router.push({name: "Process"})
   }
 
 }

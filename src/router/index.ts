@@ -7,11 +7,6 @@ Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
   {
-    path: '/capture',
-    name: 'Capture',
-    component: CaptureView
-  },
-  {
     path: '/',
     name: 'Capture',
     component: CaptureView

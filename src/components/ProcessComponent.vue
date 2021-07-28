@@ -1,17 +1,124 @@
 <template>
   <div class="process">
-    <a>Welcome to the Process Component!</a>
+    <div id="inbox">
+      <b-button @click="goToProcessInbox()">Write an Entry</b-button>
+     <!-- <b-card  v-for="entry in entries" :key="entry.id">
+        {{ entry.content }}
+      </b-card>-->
+    </div>
+    <swipe-list
+    
+      ref="list"
+      class="entry"
+      :disabled="!enabled"
+      :items="entries"
+      item-key="id"
+      @swipeout:click="itemClick"
+    >
+
+        <!--taken from https://bestofvue.com/repo/eCollect-vue-swipe-actions-vuejs-miscellaneous-->
+        <template v-slot="{ item, index, revealLeft, revealRight, close }">
+          <!-- item is the corresponding object from the array -->
+          <!-- index is clearly the index -->
+          <!-- revealLeft is method which toggles the left side -->
+          <!-- revealRight is method which toggles the right side -->
+          <!-- close is method which closes an opened side -->
+          <b-card class="card-content entry">
+            <!-- style content how ever you like -->
+            <p>{{ item.content }}</p>
+          </b-card>
+        </template>
+        <!-- right swipe side template and v-slot:right"{ item }" is the item clearly -->
+        <!-- remove if you dont wanna have right swipe side  -->
+        <template v-slot:right="{ item }">
+          <div class="swipeout-action blue" @click="remove(item)">
+            <b-badge class="delete-button">delete</b-badge>
+          </div>
+        </template>
+        <template v-slot:empty>
+          <div>
+            <!-- change mockSwipeList to an empty array to see this slot in action  -->
+            list is empty ( filtered or just empty )
+          </div>
+        </template>
+
+    </swipe-list>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import EntryService from '@/services/EntryService';
+import { SwipeList, SwipeOut } from 'vue-swipe-actions';
+import InboxEntry from '@/models/InboxEntry';
+import router from '@/router/index';
+
 
 @Component({
   components: {
-    HelloWorld,
+    SwipeOut,
+    SwipeList
   },
 })
-export default class ProcessComponent extends Vue {}
+export default class ProcessComponent extends Vue {
+  entries = [];
+  mounted() {
+    this.populateItems();
+  }
+  populateItems() {
+    new EntryService().getAllEntries().then((result) => {
+      console.log("got entries!");
+      this.entries = result.data;
+    });
+  }
+
+  goToProcessInbox() {
+    router.push({name: "Capture"})
+  }
+
+
+
+  enabled = true;
+  revealFirstRight() {
+    this.$refs.list.revealRight(0);
+  }
+  revealFirstLeft() {
+    this.$refs.list.revealLeft(0);
+  }
+  closeFirst() {
+    this.$refs.list.closeActions(0);
+  }
+  closeAll() {
+    this.$refs.list.closeActions();
+  }
+  remove(entry : InboxEntry) {
+    this.entries = this.entries.filter(i => i !== entry);
+    new EntryService().archiveEntry(entry.id);
+    // console.log(e, 'remove');
+  }
+  itemClick(e) {
+    console.log(e, "item click");
+  }
+  fbClick(e) {
+    console.log(e, "First Button Click");
+  }
+  sbClick(e) {
+    console.log(e, "Second Button Click");
+  }
+
+  
+}
 </script>
+
+<style scoped lang="scss">
+
+.entry {
+  align-content: center;
+  background-color: $primary
+}
+
+.delete-button {
+  background-color: $danger
+}
+
+</style>
