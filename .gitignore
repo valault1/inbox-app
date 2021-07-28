@@ -5,8 +5,9 @@ node_modules
 /tests/e2e/videos/
 /tests/e2e/screenshots/
 
-app.json
+<b-button variant="success" @click="saveInboxItem()">Submit </b-button>app.json
 
+src/app.json
 
 # local env files
 .env.local
