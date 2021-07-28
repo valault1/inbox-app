@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import Home from '../views/Home.vue'
-import CaptureView from '../views/CaptureView.vue'
 
 Vue.use(VueRouter)
 
@@ -9,8 +8,9 @@ const routes: Array<RouteConfig> = [
   {
     path: '/',
     name: 'Capture',
-    component: CaptureView
+    component: () => import(/* webpackChunkName: "about" */ '../views/CaptureView.vue')
   },
+  
   {
     path: '/process',
     name: 'Process',
