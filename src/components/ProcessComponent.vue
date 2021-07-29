@@ -1,48 +1,32 @@
 <template>
-  <div class="process">
-    <div id="inbox">
-      <b-button @click="goToProcessInbox()">Write an Entry</b-button>
+  <div class="process" v-if="isPopulated">
+    <b-container id="inbox">
+      <b-row style="justify-content: center">
+        <b-button @click="goToProcessInbox()">Write an Entry</b-button>
+      </b-row>
+      
+      
+        <b-jumbotron class="jumbo">
+          {{entries.length > 0 ? entries[currentIndex].content : "No more entries. :)"}}
+        </b-jumbotron>
+
+      
+      <b-row style="justify-content: center">
+        <label v-if="entries.length > 0">{{currentIndex + 1}}/{{entries.length}}</label>
+      </b-row>
+
+      <b-row style="justify-content: center">
+        <b-button @click="back()">back</b-button>
+        <b-button @click="next()">next</b-button>
+        <b-button @click="archiveCurrentEntry()" variant="danger">Archive</b-button>
+      </b-row>
+      
+      
      <!-- <b-card  v-for="entry in entries" :key="entry.id">
         {{ entry.content }}
       </b-card>-->
-    </div>
-    <swipe-list
+    </b-container>
     
-      ref="list"
-      class="entry"
-      :disabled="!enabled"
-      :items="entries"
-      item-key="id"
-      @swipeout:click="itemClick"
-    >
-
-        <!--taken from https://bestofvue.com/repo/eCollect-vue-swipe-actions-vuejs-miscellaneous-->
-        <template v-slot="{ item, index, revealLeft, revealRight, close }">
-          <!-- item is the corresponding object from the array -->
-          <!-- index is clearly the index -->
-          <!-- revealLeft is method which toggles the left side -->
-          <!-- revealRight is method which toggles the right side -->
-          <!-- close is method which closes an opened side -->
-          <b-card class="card-content entry">
-            <!-- style content how ever you like -->
-            <p>{{ item.content }}</p>
-          </b-card>
-        </template>
-        <!-- right swipe side template and v-slot:right"{ item }" is the item clearly -->
-        <!-- remove if you dont wanna have right swipe side  -->
-        <template v-slot:right="{ item }">
-          <div class="swipeout-action blue" @click="remove(item)">
-            <b-badge class="delete-button">delete</b-badge>
-          </div>
-        </template>
-        <template v-slot:empty>
-          <div>
-            <!-- change mockSwipeList to an empty array to see this slot in action  -->
-            list is empty ( filtered or just empty )
-          </div>
-        </template>
-
-    </swipe-list>
   </div>
 </template>
 
@@ -61,14 +45,16 @@ import router from '@/router/index';
   },
 })
 export default class ProcessComponent extends Vue {
-  entries = [];
+  entries : InboxEntry[] = [];
+  isPopulated = false;
+  currentIndex = 0;
   mounted() {
-    this.populateItems();
+    this.populateEntries();
   }
-  populateItems() {
+  populateEntries() {
     new EntryService().getAllEntries().then((result) => {
-      console.log("got entries!");
       this.entries = result.data;
+      this.isPopulated = true;
     });
   }
 
@@ -76,37 +62,31 @@ export default class ProcessComponent extends Vue {
     router.push({name: "Capture"})
   }
 
-
-
-  enabled = true;
-  revealFirstRight() {
-    this.$refs.list.revealRight(0);
-  }
-  revealFirstLeft() {
-    this.$refs.list.revealLeft(0);
-  }
-  closeFirst() {
-    this.$refs.list.closeActions(0);
-  }
-  closeAll() {
-    this.$refs.list.closeActions();
-  }
-  remove(entry : InboxEntry) {
+  archiveCurrentEntry() {
+    let entry = this.entries[this.currentIndex];
     this.entries = this.entries.filter(i => i !== entry);
     new EntryService().archiveEntry(entry.id);
-    // console.log(e, 'remove');
-  }
-  itemClick(e) {
-    console.log(e, "item click");
-  }
-  fbClick(e) {
-    console.log(e, "First Button Click");
-  }
-  sbClick(e) {
-    console.log(e, "Second Button Click");
+    if (this.currentIndex > this.entries.length - 1) {
+      this.currentIndex -= 1;
+    }
+    if (this.currentIndex < 0) {
+      this.currentIndex = 0;
+    }
   }
 
-  
+  next() {
+    if (this.currentIndex < this.entries.length - 1) {
+      this.currentIndex += 1;
+      console.log("increasing index");
+    }
+      
+  }
+
+  back() {
+    if (this.currentIndex > 0)
+      this.currentIndex -= 1;
+  }
+
 }
 </script>
 
@@ -114,11 +94,21 @@ export default class ProcessComponent extends Vue {
 
 .entry {
   align-content: center;
-  background-color: $primary
+  background-color: $primary;
 }
 
 .delete-button {
-  background-color: $danger
+  background-color: $danger;
+}
+
+label {
+  color: $primary;
+}
+
+
+.jumbo {
+  background-color: gray;
+  color: black;
 }
 
 </style>

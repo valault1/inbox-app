@@ -30,3 +30,23 @@ if (process.env.NODE_ENV === 'production') {
     }
   })
 }
+
+const cacheName="app-cache-v1";
+var filesToCache = [
+  '/', 
+  '/process', 
+  '/settings',
+  '/app.scss',
+  '/app.json'
+]
+self.addEventListener('install', function(event) {
+  event.waitUntil(
+    caches.open(cacheName).then(function(cache) {
+      console.log("attempting to cache...");
+      return cache.addAll(filesToCache).then(() => {
+        console.log("it's all added to the cache!")
+        return self.skipWaiting();
+      });
+    })
+  );
+});

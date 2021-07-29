@@ -8,6 +8,8 @@ module.exports = {
   },
   lintOnSave: false,
   pwa: {
-    themeColor: '#00008b'
-  }
+    themeColor: '#00008b',
+    serviceWorker: true
+  },
+  
 };

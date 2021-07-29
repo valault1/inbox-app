@@ -4,14 +4,13 @@
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     </head>
     <div id="app" >
-      <div id="nav" hidden='true'>
+      <div id="nav">
         <router-link to="/">Capture</router-link> |
-        <router-link to="/process">Process</router-link>
+        <router-link to="/process">Process</router-link> | 
+        <router-link to="/settings">Settings</router-link>
       </div>
-      <br/><br/>
       <router-view/>
     </div>
-      ...
   </html>
 </template>
 
@@ -34,7 +33,7 @@ export default class App extends Vue {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: $body-color;
+  color: $primary;
   background-color: $body-bg
 }
 
@@ -49,5 +48,10 @@ export default class App extends Vue {
 
 #nav a.router-link-exact-active {
   color: $body-color;
+}
+
+// Disables touble tap zoom on ios
+button {
+  touch-action: manipulation;
 }
 </style>

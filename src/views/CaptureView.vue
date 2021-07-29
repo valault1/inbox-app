@@ -1,7 +1,6 @@
 <template>
   <div class="capture">
     <CaptureComponent/>
-    test
   </div>
 </template>
 

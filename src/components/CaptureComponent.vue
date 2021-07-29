@@ -40,14 +40,11 @@ export default class CaptureComponent extends Vue {
   numInboxItems = 0;
  
   mounted() {
-    // get rid of button click outlines
-    document.addEventListener('click', function(e) { if(document.activeElement?.toString() == '[object HTMLButtonElement]'){ document.activeElement.blur(); } });
 
     // Supposed to bring up keyboard. Doesn't work.
-    this.$nextTick(function () {
-      this.$refs.focusMe?.focus();
-      
-    })
+    //this.$nextTick(function () {
+    //  this.$refs.focusMe?.focus();  
+    //})
 
     this.updateInboxBadge();
   }
@@ -89,9 +86,10 @@ export default class CaptureComponent extends Vue {
     }
     
   }
-
+  // NOTE: Also saves the current text
   goToProcessInbox() {
-    router.push({name: "Process"})
+    this.saveInboxItem().then(() => router.push({name: "Process"}));
+    
   }
 
 }
