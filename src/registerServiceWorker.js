@@ -31,7 +31,9 @@ if (process.env.NODE_ENV === 'production') {
   })
 }
 
-const cacheName="app-cache-v1";
+var enable = false;
+if (enable) {
+  const cacheName="app-cache-v1";
 var filesToCache = [
   '/', 
   '/process', 
@@ -50,3 +52,5 @@ self.addEventListener('install', function(event) {
     })
   );
 });
+
+}

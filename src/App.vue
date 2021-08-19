@@ -9,7 +9,7 @@
         <router-link to="/process">Process</router-link> | 
         <router-link to="/settings">Settings</router-link>
       </div>
-      <router-view/>
+      <router-view @authenticated="setAuthenticated" />
     </div>
   </html>
 </template>
@@ -24,6 +24,27 @@ import CaptureComponent from '@/components/CaptureComponent.vue'; // @ is an ali
   },
 })
 export default class App extends Vue {
+
+  authenticated = false;
+  mounted() : void{
+    console.log("mounted!");
+    if (!this.$session.exists()) {
+      console.log("SESSION DOES NOT EXISTS");
+      this.$router.replace({ name: "login" })
+    }
+    else {
+      console.log("Session exists!");
+      console.log(this.$session.getAll());
+    }
+  }
+
+  setAuthenticated(status : boolean) : void {
+    this.authenticated = status;
+  }
+
+  logout() : void {
+    this.setAuthenticated(false);
+  }
 }
 </script>
 
