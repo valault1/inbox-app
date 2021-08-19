@@ -12,6 +12,7 @@ src/app.json
 # local env files
 .env.local
 .env.*.local
+localSettings.json
 
 # Log files
 npm-debug.log*
