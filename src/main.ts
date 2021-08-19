@@ -19,6 +19,13 @@ Vue.use(IconsPlugin)
 
 Vue.config.productionTip = false
 
+// Handles sessions
+import VueSession from 'vue-session'
+var options = {
+  persist: false
+}
+
+Vue.use(VueSession, options)
 
 
 new Vue({

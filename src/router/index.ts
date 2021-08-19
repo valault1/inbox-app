@@ -7,7 +7,7 @@ Vue.use(VueRouter)
 const routes: Array<RouteConfig> = [
   {
     path: '/',
-    name: 'Capture',
+    name: 'home',
     component: () => import(/* webpackChunkName: "capture" */ '../views/CaptureView.vue')
   },
   {
@@ -22,6 +22,11 @@ const routes: Array<RouteConfig> = [
     path: '/settings',
     name: 'Settings',
     component: () => import(/* webpackChunkName: "settings" */ '../views/SettingsView.vue')
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import(/* webpackChunkName: "login" */ '../views/LoginView.vue')
   },
 ]
 

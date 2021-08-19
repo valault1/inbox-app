@@ -37,6 +37,7 @@ export default class CaptureComponent extends Vue {
   private captureText = "";
   private logOutput = "";
   private submitOnEnterKey = true;
+  private context = "Personal"
   numInboxItems = 0;
  
   mounted() {
@@ -61,7 +62,7 @@ export default class CaptureComponent extends Vue {
   async saveInboxItem(){
     if (this.captureText.length == 0)
       return;
-    new EntryService().createEntry(this.captureText).then(() => this.updateInboxBadge());
+    new EntryService().createEntry(this.captureText, this.context).then(() => this.updateInboxBadge());
     document.getElementById("captureTextInput")?.focus();
     this.captureText = "";
     this.numInboxItems += 1;

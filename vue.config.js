@@ -11,5 +11,4 @@ module.exports = {
     themeColor: '#00008b',
     serviceWorker: true
   },
-  
 };

@@ -2,7 +2,11 @@
   <div class="process" v-if="isPopulated">
     <b-container id="inbox">
       <b-row style="justify-content: center">
+        <context-switcher></context-switcher>
+      </b-row>
+      <b-row style="justify-content: center">
         <b-button @click="goToProcessInbox()">Write an Entry</b-button>
+        
       </b-row>
       
       
@@ -34,6 +38,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import EntryService from '@/services/EntryService';
 import { SwipeList, SwipeOut } from 'vue-swipe-actions';
+import ContextSwitcher from '@/components/ContextSwitcher.vue'
 import InboxEntry from '@/models/InboxEntry';
 import router from '@/router/index';
 
@@ -41,7 +46,8 @@ import router from '@/router/index';
 @Component({
   components: {
     SwipeOut,
-    SwipeList
+    SwipeList,
+    ContextSwitcher,
   },
 })
 export default class ProcessComponent extends Vue {

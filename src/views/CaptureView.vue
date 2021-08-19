@@ -13,5 +13,8 @@ import CaptureComponent from '@/components/CaptureComponent.vue'; // @ is an ali
     CaptureComponent,
   },
 })
-export default class CaptureView extends Vue {}
+export default class CaptureView extends Vue {
+
+  
+}
 </script>
