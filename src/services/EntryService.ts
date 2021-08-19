@@ -1,4 +1,5 @@
-import settings from '@/app.json';
+import oldsettings from '@/app.json';
+import settings from '@/localSettings.json'
 import InboxEntry from '@/models/InboxEntry';
 import axios, { AxiosResponse } from 'axios';
 
