@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve --port 8081",
-    "build": "vue-cli-service build && firebase deploy",
+    "build": "vue-cli-service build --mode prod",
+    "deploy":"vue-cli-service build --mode prod && firebase deploy",
+    "test-deploy":"vue-cli-service build --mode prod && serve -s dist",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint"

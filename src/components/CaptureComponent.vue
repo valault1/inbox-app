@@ -51,7 +51,8 @@ export default class CaptureComponent extends Vue {
   }
 
   async updateInboxBadge() {
-    new EntryService().count().then((result) => {
+    // @ts-ignore
+    new EntryService().countByContext(this.context, this.$session.get("userId")).then((result) => {
       this.numInboxItems = result.data;
     })
     
@@ -62,7 +63,8 @@ export default class CaptureComponent extends Vue {
   async saveInboxItem(){
     if (this.captureText.length == 0)
       return;
-    new EntryService().createEntry(this.captureText, this.context).then(() => this.updateInboxBadge());
+    // @ts-ignore
+    new EntryService().createEntry(this.captureText, this.$session.get("userId"),this.context).then(() => this.updateInboxBadge());
     document.getElementById("captureTextInput")?.focus();
     this.captureText = "";
     this.numInboxItems += 1;

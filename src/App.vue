@@ -28,12 +28,14 @@ export default class App extends Vue {
   authenticated = false;
   mounted() : void{
     console.log("mounted!");
+    // @ts-ignore
     if (!this.$session.exists()) {
       console.log("SESSION DOES NOT EXISTS");
       this.$router.replace({ name: "login" })
     }
     else {
       console.log("Session exists!");
+      // @ts-ignore
       console.log(this.$session.getAll());
     }
   }

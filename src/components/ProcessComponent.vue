@@ -1,9 +1,7 @@
 <template>
   <div class="process" v-if="isPopulated">
     <b-container id="inbox">
-      <b-row style="justify-content: center">
-        <context-switcher></context-switcher>
-      </b-row>
+      
       <b-row style="justify-content: center">
         <b-button @click="goToProcessInbox()">Write an Entry</b-button>
         
@@ -54,18 +52,20 @@ export default class ProcessComponent extends Vue {
   entries : InboxEntry[] = [];
   isPopulated = false;
   currentIndex = 0;
+  context="Personal";
   mounted() {
     this.populateEntries();
   }
   populateEntries() {
-    new EntryService().getAllEntries().then((result) => {
+    // @ts-ignore
+    new EntryService().getEntriesByUserAndContext(this.$session.get("userId"), this.context).then((result) => {
       this.entries = result.data;
       this.isPopulated = true;
     });
   }
 
   goToProcessInbox() {
-    router.push({name: "Capture"})
+    router.push({name: "home"})
   }
 
   archiveCurrentEntry() {

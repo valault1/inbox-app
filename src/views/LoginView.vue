@@ -35,8 +35,10 @@ export default class LoginView extends Vue {
       console.log(auth);
       if (auth) {
         this.$emit("authenticated", true);
+        // @ts-ignore
         this.$session.start();
-        this.$session.set('userId', user._id)
+        // @ts-ignore
+        this.$session.set('userId', user.id)
         this.$router.replace({ name: "home" });
       } 
       else {
